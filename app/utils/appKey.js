@@ -1,0 +1,26 @@
+const appString = {
+    authTitle: 'Welcome to',
+    appName1: 'Teqheal',
+    appName2: 'Solution',
+    authDes: 'Connecting People. Optimizing Process. Enhancing Performance.',
+    authCoreValue: 'Core Values',
+    coreV1: 'Working Everyday Towards Perfection',
+    coreV2: 'Grow Consistently Every Day',
+    coreV3: 'Inspiring Teams To Build The Best',
+    coreV4: 'Creating Value Adding Services',
+    signUpTitle: 'Create New Account',
+    signUpDes: 'Let\'s register and connect with your co-workers to get the things done together and faster.',
+    signInTitle: 'Sign In Your Account',
+    signInDes: 'Welcome Back! Please Sign In to access product.',
+    alreadyAcc: 'Already have an account?',
+    dontAcc: 'Don’t have an account?',
+    signUp: 'Sign Up',
+    signIn: 'Sign In',
+    login: 'Login',
+    // authTitle: '',
+    // authTitle: '',
+    // authTitle: '',
+    // authTitle: '',
+};
+
+export default appString;
