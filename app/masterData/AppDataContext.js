@@ -59,8 +59,12 @@ export const AppDataProvider = ({ children }) => {
         dispatch({ type: "updateField", field, value });
     };
 
+    const getLocalData = (key) => {
+        return localStorage.getItem(key);
+    };
+
     return (
-        <AppDataContext.Provider value={{ ...state, setAllMasterData, updateAppDataField }}>
+        <AppDataContext.Provider value={{ ...state, setAllMasterData, updateAppDataField, getLocalData }}>
             {children}
         </AppDataContext.Provider>
     );

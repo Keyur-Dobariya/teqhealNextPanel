@@ -1,5 +1,5 @@
-import imagePaths from "../assets/assetsPaths";
-import appColor from "./appColors";
+import appColor from "./appColor";
+import imagePaths from "./imagesPath";
 
 export const uploadType = {
     chatting: "chatting",
@@ -13,6 +13,36 @@ export const chatApiAction = {
     createRoom: "createRoom",
     markMessagesAsRead: "markMessagesAsRead",
     getRoomWithMessages: "getRoomWithMessages",
+};
+
+export const SelectMode = {
+    Single: "single",
+    Multiple: "multiple",
+}
+
+export const InputType = {
+    Text: "text",
+    Password: "password",
+    Email: "email",
+    TextArea: "area",
+    Number: "number",
+    Search: "search",
+    Tel: "tel",
+    URL: "url",
+    Date: "date",
+    Time: "time",
+    DateTime: "datetime-local",
+    Month: "month",
+    Week: "week",
+    Color: "color",
+    File: "file",
+    Hidden: "hidden",
+    Range: "range",
+    Radio: "radio",
+    Checkbox: "checkbox",
+    Switch: "switch",
+    Select: "select",
+    DatePicker: "datePicker",
 };
 
 export const UserRole = {
@@ -42,6 +72,11 @@ export const BloodGroup = {
     ABPositive: "AB positive (AB+)",
     ABNegative: "AB negative (AB-)",
 };
+
+export const selectOptions = (object) => Object.entries(object).map(([value, label]) => ({
+    label,
+    value,
+}));
 
 export const ApprovalStatus = {
     Approved: "Approved",
@@ -238,44 +273,44 @@ export const taskColumnStatusLabel = [
     {label: taskColumnLabel.Reopened, key: "reopened"},
 ];
 
-export const taskPriorityLabel = [
-    {
-        label: "No Priority",
-        key: "noPriority",
-        color: appColor.secondary,
-        icon: <img src={imagePaths.clear_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
-    },
-    {
-        label: "Urgent",
-        key: "urgent",
-        color: appColor.danger,
-        icon: <img src={imagePaths.urjent_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
-    },
-    {
-        label: "High Priority",
-        key: "highPriority",
-        color: appColor.warning,
-        icon: <img src={imagePaths.high_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
-    },
-    {
-        label: "Medium Priority",
-        key: "mediumPriority",
-        color: appColor.success,
-        icon: <img src={imagePaths.normal_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
-    },
-    {
-        label: "Low Priority",
-        key: "lowPriority",
-        color: appColor.info,
-        icon: <img src={imagePaths.low_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
-    },
-    {
-        label: "On Hold",
-        key: "onHold",
-        color: appColor.secondary,
-        icon: <img src={imagePaths.on_hold_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
-    },
-];
+// export const taskPriorityLabel = [
+//     {
+//         label: "No Priority",
+//         key: "noPriority",
+//         color: appColor.secondary,
+//         icon: <img src={imagePaths.clear_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
+//     },
+//     {
+//         label: "Urgent",
+//         key: "urgent",
+//         color: appColor.danger,
+//         icon: <img src={imagePaths.urjent_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
+//     },
+//     {
+//         label: "High Priority",
+//         key: "highPriority",
+//         color: appColor.warning,
+//         icon: <img src={imagePaths.high_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
+//     },
+//     {
+//         label: "Medium Priority",
+//         key: "mediumPriority",
+//         color: appColor.success,
+//         icon: <img src={imagePaths.normal_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
+//     },
+//     {
+//         label: "Low Priority",
+//         key: "lowPriority",
+//         color: appColor.info,
+//         icon: <img src={imagePaths.low_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
+//     },
+//     {
+//         label: "On Hold",
+//         key: "onHold",
+//         color: appColor.secondary,
+//         icon: <img src={imagePaths.on_hold_priority} style={{width: 18, height: 18, marginRight: 8}}/>,
+//     },
+// ];
 
 export const taskStatusLabel = [
     {label: "📌 To Do", key: "toDo"},

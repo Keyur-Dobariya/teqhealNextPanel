@@ -1,18 +1,14 @@
-import {getLocalData, loginDataKeys} from "../dataStorage/DataPref";
-
-// export const isDevMode = process.env.REACT_APP_IS_DEV === "true";
-export const isDevMode = true;
+export const isDevMode = false;
 
 // firebase target:apply hosting default whogetsa
 // firebase deploy --only hosting:devtracker
 // firebase deploy --only hosting:default
 
 
+// https://empbackend-16ns.onrender.com
 const environment = {
-  apiBaseUrl: isDevMode ? process.env.REACT_APP_API_BASE_URL_DEV : process.env.REACT_APP_API_BASE_URL_PROD,
-  webUrl: isDevMode ? process.env.REACT_APP_WEB_URL_DEV : process.env.REACT_APP_WEB_URL_PROD,
-  socketUrl: isDevMode ? process.env.REACT_APP_SOCKET_URL_DEV : process.env.REACT_APP_SOCKET_URL_PROD,
-  isDev: isDevMode,
+  apiBaseUrl: isDevMode ? 'http://192.168.0.104:5201' : 'https://empbackend-aru4.onrender.com',
+  webBaseUrl: isDevMode ? 'http://192.168.0.104:3000' : 'https://empbackend-aru4.onrender.com',
 };
 
 const endpoints = {
@@ -95,9 +91,9 @@ const endpoints = {
   uploadFile: `${environment.apiBaseUrl}/api/uploadFile`,
   uploadMultiFiles: `${environment.apiBaseUrl}/api/uploadMultiFiles`,
   deleteFile: `${environment.apiBaseUrl}/api/deleteFile`,
-  tasksChange: `${environment.apiBaseUrl}/tasksChange?userId=${getLocalData(loginDataKeys._id)}&role=${getLocalData(loginDataKeys.role)}`,
-  employeesChange: `${environment.apiBaseUrl}/employeesChange?userId=${getLocalData(loginDataKeys._id)}&role=${getLocalData(loginDataKeys.role)}`,
-  chatUpdates: `${environment.apiBaseUrl}/chatUpdates?userId=${getLocalData(loginDataKeys._id)}`,
+  // tasksChange: `${environment.apiBaseUrl}/tasksChange?userId=${localStorage.getItem(appKey._id)}&role=${localStorage.getItem(appKey.role)}`,
+  // employeesChange: `${environment.apiBaseUrl}/employeesChange?userId=${localStorage.getItem(appKey._id)}&role=${localStorage.getItem(appKey.role)}`,
+  // chatUpdates: `${environment.apiBaseUrl}/chatUpdates?userId=${localStorage.getItem(appKey._id)}`,
 };
 
 export { environment, endpoints };

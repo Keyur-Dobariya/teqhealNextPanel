@@ -16,10 +16,11 @@ const apiCall = async ({
                            headers = {},
                            setIsLoading,
                        }) => {
-    setIsLoading?.(true);
+    if(setIsLoading) {
+        setIsLoading(true);
+    }
 
     const token = localStorage.getItem(appKey.jwtToken) ?? "";
-    console.log("token", token)
     const defaultHeaders = {
         Authorization: `Bearer ${token}`,
         'Content-Type': isMultipart ? 'multipart/form-data' : 'application/json',
@@ -57,7 +58,9 @@ const apiCall = async ({
         console.error("API Call Error:", error);
         throw error;
     } finally {
-        setIsLoading?.(false);
+        if(setIsLoading) {
+            setIsLoading(false);
+        }
     }
 };
 

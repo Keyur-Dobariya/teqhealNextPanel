@@ -6,14 +6,12 @@ const imagePaths = {
     icon_sm_white: '/assets/images/icon_sm_white.png',
     icon_sm_multi: '/assets/images/icon_sm_multi.png',
     right_tick: '/assets/images/right_tick.svg',
-    anim_image1: '/assets/images/anim_image1.svg',
-    anim_image2: '/assets/images/anim_image2.svg',
-    anim_image3: '/assets/images/anim_image3.svg',
-    anim_image4: '/assets/images/anim_image4.svg',
     auth_design_dot_square: '/assets/images/auth_design_dot_square.png',
     auth_design_round_big: '/assets/images/auth_design_round_big.png',
     auth_design_round_small: '/assets/images/auth_design_round_small.png',
     heyWaveHand: '/assets/images/heyWaveHand.png',
+    male_profile: '/assets/images/male_profile.png',
+    female_profile: '/assets/images/female_profile.png',
 };
 
 export default imagePaths;
