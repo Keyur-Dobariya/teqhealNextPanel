@@ -1,26 +1,15 @@
 'use client';
 
 import {Col, Grid, Row} from "antd";
-// import CardClockInOut from "./CardClockInOut";
-// import CardLiveTracking from "./CardLiveTracking";
-// import CardTodayActivity from "./CardTodayActivity";
-// import CardDashboardCommon from "./CardDashboardCommon";
-// import CardGreeting from "./CardGreeting";
-// import CardEarlyOutReminder from "./CardEarlyOutReminder";
-// import CardNoticeBoard from "./CardNoticeBoard";
-// import CardEmpAttendanceReport from "./CardEmpAttendanceReport";
-// import CardEmpLeaveReport from "./CardEmpLeaveReport";
-import dynamic from "next/dynamic";
-
-const CardClockInOut = dynamic(() => import('./CardClockInOut'));
-const CardLiveTracking = dynamic(() => import('./CardLiveTracking'));
-const CardTodayActivity = dynamic(() => import('./CardTodayActivity'));
-const CardDashboardCommon = dynamic(() => import('./CardDashboardCommon'));
-const CardGreeting = dynamic(() => import('./CardGreeting'));
-const CardEarlyOutReminder = dynamic(() => import('./CardEarlyOutReminder'));
-const CardNoticeBoard = dynamic(() => import('./CardNoticeBoard'));
-const CardEmpAttendanceReport = dynamic(() => import('./CardEmpAttendanceReport'));
-const CardEmpLeaveReport = dynamic(() => import('./CardEmpLeaveReport'));
+import CardClockInOut from "./CardClockInOut";
+import CardLiveTracking from "./CardLiveTracking";
+import CardTodayActivity from "./CardTodayActivity";
+import CardDashboardCommon from "./CardDashboardCommon";
+import CardGreeting from "./CardGreeting";
+import CardEarlyOutReminder from "./CardEarlyOutReminder";
+import CardNoticeBoard from "./CardNoticeBoard";
+import CardEmpAttendanceReport from "./CardEmpAttendanceReport";
+import CardEmpLeaveReport from "./CardEmpLeaveReport";
 
 export default function Page() {
     return (
@@ -54,6 +43,6 @@ export default function Page() {
                     <CardEmpAttendanceReport />
                 </Col>
             </Row>
-            </div>
+        </div>
     );
 }

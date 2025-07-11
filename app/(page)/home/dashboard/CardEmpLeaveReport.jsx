@@ -9,17 +9,19 @@ import {
 } from "@ant-design/icons";
 import appString from "../../../utils/appString";
 import {useState} from "react";
-import {AlertTriangle, Clock, Watch} from "../../../utils/icons";
+import {AlertTriangle, Box, Clock, Watch} from "../../../utils/icons";
 import dayjs from "dayjs";
-import {DateTimeFormat} from "../../../utils/enum";
-import {colorTag} from "../../../components/CommonComponents";
+import {DateTimeFormat, getLabelByKey, leaveCategoryLabel, leaveLabelKeys, leaveTypeLabel} from "../../../utils/enum";
+import {antTag, colorTag} from "../../../components/CommonComponents";
 import {endpoints} from "../../../api/apiEndpoints";
-import {getLocalData} from "../../../dataStorage/DataPref";
+import {getLocalData, isAdmin} from "../../../dataStorage/DataPref";
 import appKey from "../../../utils/appKey";
 import {useAppData} from "../../../masterData/AppDataContext";
 import apiCall, {HttpMethod} from "../../../api/apiServiceProvider";
+import appKeys from "../../../utils/appKey";
+import {capitalizeLastPathSegment} from "../../../utils/utils";
 
-export default function CardEmpAttendanceReport() {
+export default function CardEmpLeaveReport() {
     const {attendancesData} = useAppData();
     const [empReportData, setEmpReportData] = useState(attendancesData);
     const [startDate, setStartDate] = useState();
@@ -34,64 +36,6 @@ export default function CardEmpAttendanceReport() {
         (currentPage - 1) * pageSize,
         currentPage * pageSize
     );
-
-    const empReportTableColumn = () => [
-        {
-            title: "Date",
-            dataIndex: "createdAt",
-            key: "createdAt",
-            align: 'center',
-            render: (createdAt) => {
-                if (!createdAt) return "-";
-                return dayjs(createdAt).format(DateTimeFormat.DDMMMMYYYY);
-            },
-        },
-        {
-            title: "Total Hours",
-            dataIndex: "totalHours",
-            key: "totalHours",
-            align: 'center',
-            render: (totalHours) => {
-                return colorTag(totalHours, appColor.secondPrimary);
-            },
-        },
-        {
-            title: "Working Hours",
-            dataIndex: "workingHours",
-            key: "workingHours",
-            align: 'center',
-            render: (workingHours) => {
-                return colorTag(workingHours, appColor.success);
-            },
-        },
-        {
-            title: "Break Hours",
-            dataIndex: "breakHours",
-            key: "breakHours",
-            align: 'center',
-            render: (breakHours) => {
-                return colorTag(breakHours, appColor.danger);
-            },
-        },
-        {
-            title: "Late Arrival",
-            dataIndex: "lateArrival",
-            key: "lateArrival",
-            align: 'center',
-            render: (lateArrival) => {
-                return colorTag(lateArrival, appColor.warning);
-            },
-        },
-        {
-            title: "Overtime",
-            dataIndex: "overtime",
-            key: "overtime",
-            align: 'center',
-            render: (overtime) => {
-                return colorTag(overtime, appColor.info);
-            },
-        },
-    ];
 
     const getEmpReportData = async () => {
         try {
@@ -134,37 +78,103 @@ export default function CardEmpAttendanceReport() {
         }
     };
 
+    const leaveTableColumn = [
+        Table.EXPAND_COLUMN,
+        {
+            title: capitalizeLastPathSegment(appKeys.leaveType),
+            dataIndex: appKeys.leaveType,
+            key: appKeys.leaveType,
+            render: (leaveType) => {
+                return antTag(
+                    getLabelByKey(leaveType, leaveTypeLabel),
+                    leaveType === leaveLabelKeys.fullDay ? "red" : leaveType === leaveLabelKeys.halfDay ? "blue" : "purple"
+                );
+            },
+        },
+        {
+            title: capitalizeLastPathSegment(appKeys.hours),
+            dataIndex: appKeys.hours,
+            key: appKeys.hours,
+        },
+        {
+            title: capitalizeLastPathSegment(appKeys.startDate),
+            dataIndex: appKeys.startDate,
+            key: appKeys.startDate,
+            render: (startDate) => {
+                return startDate ? dayjs(startDate).format("YYYY-MM-DD") : '-';
+            },
+        },
+        {
+            title: capitalizeLastPathSegment(appKeys.endDate),
+            dataIndex: appKeys.endDate,
+            key: appKeys.endDate,
+            render: (endDate) => {
+                return endDate ? dayjs(endDate).format("YYYY-MM-DD") : '-';
+            },
+        },
+        {
+            title: capitalizeLastPathSegment(appKeys.leaveCategory),
+            dataIndex: appKeys.leaveCategory,
+            key: appKeys.leaveCategory,
+            render: (leaveCategory) => {
+                return antTag(
+                    getLabelByKey(leaveCategory, leaveCategoryLabel({disabledValues: []})),
+                    leaveCategory === leaveLabelKeys.paid ? "red" : "green"
+                );
+            },
+        },
+        {
+            title: capitalizeLastPathSegment(appKeys.isUnexpected),
+            dataIndex: appKeys.isUnexpected,
+            key: appKeys.isUnexpected,
+            render: (isUnexpected) => {
+                return antTag(
+                    isUnexpected ? 'Yes' : 'No',
+                    isUnexpected ? "red" : "green"
+                );
+            },
+        },
+        {
+            title: capitalizeLastPathSegment(appKeys.status),
+            dataIndex: appKeys.status,
+            key: appKeys.status,
+            render: (status) => {
+                return antTag(
+                    capitalizeLastPathSegment(status),
+                    status === leaveLabelKeys.rejected ? "red" : status === leaveLabelKeys.approved ? "green" : "gold"
+                );
+            },
+        },
+        {
+            title: capitalizeLastPathSegment(appKeys.sandwichLeave),
+            dataIndex: appKeys.sandwichLeave,
+            key: appKeys.sandwichLeave,
+            render: (sandwichLeave) => {
+                return antTag(
+                    sandwichLeave ? 'Yes' : 'No',
+                    sandwichLeave ? "red" : "green"
+                );
+            },
+        },
+    ];
+
     return (
         <div>
             <Table
+                rowKey={(record) => record._id}
                 pagination={false}
-                columns={empReportTableColumn()}
-                dataSource={paginatedData}
+                columns={leaveTableColumn}
+                dataSource={[]}
                 scroll={{ x: "max-content", y: 280 }}
                 style={{ scrollbarWidth: "none" }}
                 loading={isLoading}
                 bordered
                 title={() => (
                     <div className="flex items-center gap-2">
-                        <LineChartOutlined style={{color: colorMap.F}} />
-                        <div className="font-[550] text-[15px]">{appString.attendanceReport}</div>
+                        <Box color={colorMap.K} />
+                        <div className="font-[550] text-[15px]">{appString.leaveReport}</div>
                     </div>
                 )}
-                // footer={() => (
-                //     <div className="flex justify-center">
-                //         <Pagination
-                //             current={currentPage}
-                //             pageSize={pageSize}
-                //             size="small"
-                //             total={empReportData.length}
-                //             onChange={(page, size) => {
-                //                 setCurrentPage(page);
-                //                 setPageSize(size);
-                //             }}
-                //             showSizeChanger={false}
-                //         />
-                //     </div>
-                // )}
             />
         </div>
     );

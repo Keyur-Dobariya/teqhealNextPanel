@@ -41,73 +41,73 @@ export default function CardDashboardCommon() {
 
     if(isAdmin()) {
         return (
-                <Row gutter={[16, 16]}>
-                    <CommonGridBox
-                        title="Total Employees"
-                        value={dashboardData?.employeeUsers || 0}
-                        color="A"
-                        icon={<UserOutlined style={{color: getDarkColor("A"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="Total Admins"
-                        value={dashboardData?.adminUsers || 0}
-                        color="V"
-                        icon={<UserOutlined style={{color: getDarkColor("V"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="Today Present"
-                        value={dashboardData?.todayPresent || 0}
-                        color="C"
-                        icon={<UserAddOutlined style={{color: getDarkColor("C"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="Today Absent"
-                        value={dashboardData?.todayAbsent || 0}
-                        color="D"
-                        icon={<UserDeleteOutlined style={{color: getDarkColor("D"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="No. Of Clients"
-                        value={dashboardData?.noOfClients || 0}
-                        color="E"
-                        icon={<SmileOutlined style={{color: getDarkColor("E"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="No. Of Projects"
-                        value={dashboardData?.noOfProjects || 0}
-                        color="F"
-                        icon={<GithubOutlined style={{color: getDarkColor("F"), fontSize: 18}}/>}/>
+            <Row gutter={[16, 16]}>
+                <CommonGridBox
+                    title="Total Employees"
+                    value={dashboardData?.employeeUsers || 0}
+                    color="A"
+                    icon={<UserOutlined style={{color: getDarkColor("A"), fontSize: 18}}/>}/>
+                <CommonGridBox
+                    title="Total Admins"
+                    value={dashboardData?.adminUsers || 0}
+                    color="V"
+                    icon={<UserOutlined style={{color: getDarkColor("V"), fontSize: 18}}/>}/>
+                <CommonGridBox
+                    title="Today Present"
+                    value={dashboardData?.todayPresent || 0}
+                    color="C"
+                    icon={<UserAddOutlined style={{color: getDarkColor("C"), fontSize: 18}}/>}/>
+                <CommonGridBox
+                    title="Today Absent"
+                    value={dashboardData?.todayAbsent || 0}
+                    color="D"
+                    icon={<UserDeleteOutlined style={{color: getDarkColor("D"), fontSize: 18}}/>}/>
+                <CommonGridBox
+                    title="No. Of Clients"
+                    value={dashboardData?.noOfClients || 0}
+                    color="E"
+                    icon={<SmileOutlined style={{color: getDarkColor("E"), fontSize: 18}}/>}/>
+                <CommonGridBox
+                    title="No. Of Projects"
+                    value={dashboardData?.noOfProjects || 0}
+                    color="F"
+                    icon={<GithubOutlined style={{color: getDarkColor("F"), fontSize: 18}}/>}/>
             </Row>
         );
     }
 
     return (
-                <Row gutter={[16, 16]}>
-                    <CommonGridBox
-                        title="Today Working Hours"
-                        value={dashboardData?.todayWorkingHours || 0}
-                        color="A"
-                        icon={<ClockCircleOutlined style={{color: getDarkColor("A"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="Weekly Hours"
-                        value={dashboardData?.weeklyHours || 0}
-                        color="V"
-                        icon={<HistoryOutlined style={{color: getDarkColor("V"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="Monthly Hours"
-                        value={dashboardData?.monthlyHours || 0}
-                        color="C"
-                        icon={<FieldTimeOutlined style={{color: getDarkColor("C"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="Monthly Late Arrival"
-                        value={dashboardData?.monthlyLateArrivalHours || 0}
-                        color="D"
-                        icon={<FallOutlined style={{color: getDarkColor("D"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="Monthly Overtime Hours"
-                        value={dashboardData?.monthlyOvertimeHours || 0}
-                        color="E"
-                        icon={<SmileOutlined style={{color: getDarkColor("E"), fontSize: 18}}/>}/>
-                    <CommonGridBox
-                        title="Monthly Absent Count"
-                        value={dashboardData?.monthlyAbsentCount || 0}
-                        color="F"
-                        icon={<UserDeleteOutlined style={{color: getDarkColor("F"), fontSize: 18}}/>}/>
-                </Row>
+        <Row gutter={[16, 16]}>
+            <CommonGridBox
+                title="Today Working Hours"
+                value={dashboardData?.todayWorkingHours || 0}
+                color="A"
+                icon={<ClockCircleOutlined style={{color: getDarkColor("A"), fontSize: 18}}/>}/>
+            <CommonGridBox
+                title="Weekly Hours"
+                value={dashboardData?.weeklyHours || 0}
+                color="V"
+                icon={<HistoryOutlined style={{color: getDarkColor("V"), fontSize: 18}}/>}/>
+            <CommonGridBox
+                title="Monthly Hours"
+                value={dashboardData?.monthlyHours || 0}
+                color="C"
+                icon={<FieldTimeOutlined style={{color: getDarkColor("C"), fontSize: 18}}/>}/>
+            <CommonGridBox
+                title="Monthly Late Arrival"
+                value={dashboardData?.monthlyLateArrivalHours || 0}
+                color="D"
+                icon={<FallOutlined style={{color: getDarkColor("D"), fontSize: 18}}/>}/>
+            <CommonGridBox
+                title="Monthly Overtime Hours"
+                value={dashboardData?.monthlyOvertimeHours || 0}
+                color="E"
+                icon={<SmileOutlined style={{color: getDarkColor("E"), fontSize: 18}}/>}/>
+            <CommonGridBox
+                title="Monthly Absent Count"
+                value={dashboardData?.monthlyAbsentCount || 0}
+                color="F"
+                icon={<UserDeleteOutlined style={{color: getDarkColor("F"), fontSize: 18}}/>}/>
+        </Row>
     );
 }

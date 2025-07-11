@@ -10,6 +10,7 @@ import AnimatedDiv, {Direction} from "../../../components/AnimatedDiv";
 import {useState} from "react";
 import apiCall, {HttpMethod} from "../../../api/apiServiceProvider";
 import {endpoints} from "../../../api/apiEndpoints";
+import validationRules from "../../../utils/validationRules";
 
 export default function SignUp() {
     const [form] = Form.useForm();
@@ -24,7 +25,7 @@ export default function SignUp() {
             const formData = form.getFieldsValue();
             await apiCall({
                 method: HttpMethod.POST,
-                url: endpoints.signUp,
+                url: endpoints.login,
                 data: formData,
                 setIsLoading: setLoading,
                 successCallback: () => router.push(pageRoutes.loginPage),
@@ -49,20 +50,14 @@ export default function SignUp() {
             >
                 <Form.Item
                     name={appKey.fullName}
-                    rules={[{ required: true, message: appString.fullNameV1 }]}
+                    rules={validationRules[appKey.fullName]}
                     hasFeedback
                 >
                     <Input prefix={<UserOutlined />} placeholder={appString.fullName} />
                 </Form.Item>
                 <Form.Item
                     name={appKey.emailAddress}
-                    rules={[
-                        { required: true, message: appString.emailAddressV1 },
-                        {
-                            pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                            message: appString.emailAddressV2,
-                        },
-                    ]}
+                    rules={validationRules[appKey.emailAddress]}
                     hasFeedback
                 >
                     <Input
@@ -75,13 +70,7 @@ export default function SignUp() {
                 </Form.Item>
                 <Form.Item
                     name={appKey.mobileNumber}
-                    rules={[
-                        { required: true, message: appString.mobileNumberV1 },
-                        {
-                            pattern: /^[6789]\d{9}$/,
-                            message: appString.mobileNumberV2,
-                        },
-                    ]}
+                    rules={validationRules[appKey.mobileNumber]}
                     hasFeedback
                 >
                     <Input
@@ -94,13 +83,7 @@ export default function SignUp() {
                 </Form.Item>
                 <Form.Item
                     name={appKey.password}
-                    rules={[
-                        { required: true, message: appString.passwordV1 },
-                        { pattern: /^[A-Z]/, message: appString.passwordV2 },
-                        { pattern: /\d/, message: appString.passwordV3 },
-                        { pattern: /[@$!%*?&]/, message: appString.passwordV4 },
-                        { min: 8, message: appString.passwordV5 },
-                    ]}
+                    rules={validationRules[appKey.password]}
                     hasFeedback
                 >
                     <Input.Password
@@ -111,18 +94,7 @@ export default function SignUp() {
                 </Form.Item>
                 <Form.Item
                     name={appKey.confirmPassword}
-                    rules={[
-                        { required: true, message: appString.confirmPasswordV1 },
-                        {
-                            validator: (_, value) => {
-                                const password = form.getFieldValue("password");
-                                if (password && value && value !== password) {
-                                    return Promise.reject(appString.confirmPasswordV2);
-                                }
-                                return Promise.resolve();
-                            },
-                        },
-                    ]}
+                    rules={validationRules[appKey.confirmPassword](form.getFieldValue)}
                     hasFeedback
                 >
                     <Input.Password

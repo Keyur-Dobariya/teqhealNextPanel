@@ -1,6 +1,6 @@
 'use client';
 
-import {Avatar, Button, Card, Col, List, Pagination, Row, Table} from "antd";
+import {Avatar, Button, Card, Col, DatePicker, Grid, List, Pagination, Row, Table} from "antd";
 import {appColor, colorMap} from "../../../utils/appColor";
 import {
     LineChartOutlined,
@@ -8,7 +8,7 @@ import {
     PauseOutlined,
 } from "@ant-design/icons";
 import appString from "../../../utils/appString";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {AlertTriangle, Clock, Watch} from "../../../utils/icons";
 import dayjs from "dayjs";
 import {DateTimeFormat} from "../../../utils/enum";
@@ -18,8 +18,11 @@ import {getLocalData} from "../../../dataStorage/DataPref";
 import appKey from "../../../utils/appKey";
 import {useAppData} from "../../../masterData/AppDataContext";
 import apiCall, {HttpMethod} from "../../../api/apiServiceProvider";
+const { useBreakpoint } = Grid;
+const { RangePicker } = DatePicker;
 
-export default function CardAttendanceReport() {
+export default function CardEmpAttendanceReport() {
+    const screens = useBreakpoint();
     const {attendancesData} = useAppData();
     const [empReportData, setEmpReportData] = useState(attendancesData);
     const [startDate, setStartDate] = useState();
@@ -28,12 +31,14 @@ export default function CardAttendanceReport() {
     const [isLoading, setIsLoading] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(5);
 
-    const paginatedData = [...empReportData].reverse().slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
-    );
+    const paginatedData = useMemo(() => {
+        return [...empReportData].reverse().slice(
+            (currentPage - 1) * pageSize,
+            currentPage * pageSize
+        );
+    }, [empReportData, currentPage, pageSize]);
 
     const empReportTableColumn = () => [
         {
@@ -43,7 +48,7 @@ export default function CardAttendanceReport() {
             align: 'center',
             render: (createdAt) => {
                 if (!createdAt) return "-";
-                return dayjs(createdAt).format(DateTimeFormat.DDMMMMYYYY);
+                return <div className="w-20 flex justify-center items-center text-center">{dayjs(createdAt).format(DateTimeFormat.DDMMMMYYYY)}</div>;
             },
         },
         {
@@ -126,6 +131,13 @@ export default function CardAttendanceReport() {
         }
     };
 
+    const rangePresets = [
+        { label: 'Last 7 Days', value: [dayjs().add(-7, 'd'), dayjs()] },
+        { label: 'Last 14 Days', value: [dayjs().add(-14, 'd'), dayjs()] },
+        { label: 'Last 30 Days', value: [dayjs().add(-30, 'd'), dayjs()] },
+        { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
+    ];
+
     const onRangeChange = (dates, dateStrings) => {
         if (dates) {
             setStartDate(dateStrings[0]);
@@ -140,31 +152,31 @@ export default function CardAttendanceReport() {
                 pagination={false}
                 columns={empReportTableColumn()}
                 dataSource={paginatedData}
-                scroll={{ x: "max-content", y: 280 }}
-                style={{ scrollbarWidth: "none" }}
+                // scroll={{ x: true, y: !screens.xl ? 300 : 240 }}
+                // scroll={{ x: true, scrollToFirstRowOnChange: true }}
                 loading={isLoading}
                 bordered
                 title={() => (
                     <div className="flex items-center gap-2">
                         <LineChartOutlined style={{color: colorMap.F}} />
-                        <div className="font-[550] text-[15px]">{appString.attendanceReport}</div>
+                        <div className="flex-1 font-[550] text-[15px]">{appString.attendanceReport}</div>
+                        <RangePicker presets={rangePresets} onChange={onRangeChange} />
                     </div>
                 )}
-                // footer={() => (
-                //     <div className="flex justify-center">
-                //         <Pagination
-                //             current={currentPage}
-                //             pageSize={pageSize}
-                //             size="small"
-                //             total={empReportData.length}
-                //             onChange={(page, size) => {
-                //                 setCurrentPage(page);
-                //                 setPageSize(size);
-                //             }}
-                //             showSizeChanger={false}
-                //         />
-                //     </div>
-                // )}
+                footer={() => (
+                    <div className="flex justify-center">
+                        <Pagination
+                            current={currentPage}
+                            pageSize={pageSize}
+                            total={empReportData.length}
+                            onChange={(page, size) => {
+                                setCurrentPage(page);
+                                setPageSize(size);
+                            }}
+                            showSizeChanger={false}
+                        />
+                    </div>
+                )}
             />
         </div>
     );

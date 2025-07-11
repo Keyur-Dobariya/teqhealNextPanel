@@ -1,43 +1,75 @@
 'use client';
 
-import {Button, Card, Col, Row} from "antd";
+import {Avatar, Button, Card, Col, List, Row} from "antd";
 import {appColor} from "../../../utils/appColor";
 import {
     ClockCircleOutlined,
-    DashboardOutlined,
     CaretRightOutlined,
     PauseOutlined,
 } from "@ant-design/icons";
 import appString from "../../../utils/appString";
 import {useState} from "react";
+import {AlertTriangle, Clock, Watch} from "../../../utils/icons";
 
-export default function CardLiveTracking() {
+export default function CardEarlyOutReminder() {
 
-    const [isTrackingOn, setIsTrackingOn] = useState(false);
+    const data = [
+        {
+            time: '01h:00m',
+            date: '01 Jan, 2025',
+        },
+        {
+            time: '02h:15m',
+            date: '03 Jan, 2025',
+        },
+        {
+            time: '01h:15m',
+            date: '05 Jan, 2025',
+        },
+        {
+            time: '00h:45m',
+            date: '15 Jan, 2025',
+        },
+        {
+            time: '00h:20m',
+            date: '23 Jan, 2025',
+        },
+    ];
 
     return (
-        <Card>
-            <div className="flex flex-col gap-4">
+        <Card title={
+            (
                 <div className="flex items-center gap-2">
-                    <DashboardOutlined style={{color: appColor.secondPrimary, fontSize: "16px"}}/>
-                    <div className="font-[550] text-[15px]">{appString.liveTracking}</div>
+                    <AlertTriangle color={appColor.danger} />
+                    <div className="font-[550] text-[15px]">{appString.earlyOutReminder}</div>
+                    <div className="w-[21px] h-[21px] shadow-sm bg-gray-50/50 border-[1px] border-gray-200 rounded-md text-center text-sm">
+                        5
+                    </div>
                 </div>
-                <Row gutter={[16, 16]}>
-                    <Col span={11}>
-                        <Button className="w-full" color="geekblue" variant="filled"
-                                icon={<ClockCircleOutlined/>}>00:00:00</Button>
-                    </Col>
-                    <Col span={13}>
-                        <Button className="w-full" color="green"
-                                variant={isTrackingOn ? "solid" : "outlined"}
-                                icon={isTrackingOn ? <PauseOutlined/> : <CaretRightOutlined/>}
-                                onClick={() => {
-                                    setIsTrackingOn(!isTrackingOn);
-                                }}>
-                            {isTrackingOn ? appString.stopTracking : appString.startTracking}
-                        </Button>
-                    </Col>
-                </Row>
+            )
+        }>
+            <div className="max-h-[300px] overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+                <List
+                    dataSource={data}
+                    renderItem={(item, index) => (
+                        <List.Item style={{ padding: 10, cursor: "pointer" }}>
+                            <List.Item.Meta
+                                description={(
+                                    <div className="flex flex-row items-center gap-3">
+                                        <div className="border-[1px] border-gray-200 rounded-xl p-2">
+                                            <Watch color={appColor.danger}/>
+                                        </div>
+                                        <div className="flex-1 flex flex-col">
+                                            <div className="text-gray-900 text-[14px] font-medium">{item.time}</div>
+                                            <div className="text-gray-500 text-[12px]">Early Out Time</div>
+                                        </div>
+                                        <div className="text-gray-500 text-[12px]">{item.date}</div>
+                                    </div>
+                                )}
+                            />
+                        </List.Item>
+                    )}
+                />
             </div>
         </Card>
     );

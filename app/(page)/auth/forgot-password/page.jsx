@@ -6,26 +6,54 @@ import { useRouter } from "next/navigation";
 import appString from "../../../utils/appString";
 import appKey from "../../../utils/appKey";
 import pageRoutes from "../../../utils/pageRoutes";
+import {useEffect, useState} from "react";
+import AnimatedDiv, {Direction} from "../../../components/AnimatedDiv";
+import apiCall, {HttpMethod} from "../../../api/apiServiceProvider";
+import {endpoints} from "../../../api/apiEndpoints";
+import {getLocalData} from "../../../dataStorage/DataPref";
 
-export default function SignIn() {
+export default function ForgotPassword() {
     const [form] = Form.useForm();
     const router = useRouter();
+    // const { data } = router.query;
 
-    const handleChange = (changedValues, allValues) => {
-        console.log("allValues=>", allValues);
+    // console.log("data=>", data);
+
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const savedName = getLocalData("fullName")
+        console.log("savedName", savedName)
+    }, []);
+
+    const onFormSubmit = async () => {
+        try {
+            await form.validateFields();
+
+            const formData = form.getFieldsValue();
+            await apiCall({
+                method: HttpMethod.POST,
+                url: endpoints.forgetPassSendOtp,
+                data: formData,
+                setIsLoading: setLoading,
+                // successCallback: () => router.push(pageRoutes.loginPage),
+            });
+        } catch (error) {
+            console.error("Submission error:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="z-10 w-full max-w-110 p-4" style={{ marginLeft: "2px" }}>
-            <div className="font-medium text-2xl xl:text-3xl">{appString.signInTitle}</div>
+        <AnimatedDiv className="z-10 w-full max-w-110 p-4" style={{ marginLeft: "2px" }} direction={Direction.TOP_TO_BOTTOM}>
+            <div className="font-medium text-2xl xl:text-3xl">{appString.forgotPassword}</div>
             <div className="w-[25px] h-[5px] rounded-xl bg-amber-500 my-2" />
-            <div className="text-gray-500 text-sm mb-7 xl:text-base">{appString.signInDes}</div>
+            <div className="text-gray-500 text-sm mb-7 xl:text-base">{appString.forgotPasswordDes}</div>
             <Form
                 form={form}
-                name="signin"
-                onFinish={(values) => {}}
+                name="forgotPassword"
                 onKeyDown={null}
-                onValuesChange={handleChange}
                 initialValues={{ remember: true }}
             >
                 <Form.Item
@@ -47,38 +75,18 @@ export default function SignIn() {
                         type="email"
                     />
                 </Form.Item>
-                <Form.Item
-                    name={appKey.password}
-                    rules={[
-                        { required: true, message: appString.passwordV1 },
-                        { pattern: /^[A-Z]/, message: appString.passwordV2 },
-                        { pattern: /\d/, message: appString.passwordV3 },
-                        { pattern: /[@$!%*?&]/, message: appString.passwordV4 },
-                        { min: 8, message: appString.passwordV5 },
-                    ]}
-                    hasFeedback
-                >
-                    <Input.Password
-                        prefix={<LockOutlined />}
-                        placeholder={appString.password}
-                        type="password"
-                    />
-                </Form.Item>
             </Form>
-            <div className="my-3 text-end cursor-pointer text-blue-700 font-semibold hover:text-blue-500">
-                {appString.forgotPassword}
-            </div>
-            <Button type="primary" className="w-full my-2">{appString.login}</Button>
+            <Button type="primary" htmlType="submit" loading={loading} className="w-full my-2" onClick={onFormSubmit}>{appString.submit}</Button>
             <div className="text-gray-500 text-center my-2">
-                {appString.dontAcc}
+                {appString.rememberPassword}
                 <span
                     className="cursor-pointer text-blue-700 font-semibold hover:text-blue-500"
-                    onClick={() => router.push(pageRoutes.signupPage)}
+                    onClick={() => router.push(pageRoutes.loginPage)}
                 >
                         {" "}
-                    {appString.signUp}
+                    {appString.signIn}
                     </span>
             </div>
-        </div>
+        </AnimatedDiv>
     );
 }
