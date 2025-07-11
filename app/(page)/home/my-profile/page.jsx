@@ -1,10 +1,11 @@
 'use client';
 
-import {capitalizeLastPathSegment} from "../../../utils/utils";
-import pageRoutes from "../../../utils/pageRoutes";
+import {useSearchParams} from "next/navigation";
+import CardProfilePage from "../CardProfilePage";
 
 export default function Page() {
-    return (
-        <div>{capitalizeLastPathSegment(pageRoutes.dashboard)}</div>
-    );
+    const searchParams = useSearchParams();
+    const employeeCode = searchParams.get('user');
+
+    return <CardProfilePage employeeCode={employeeCode} />;
 }
